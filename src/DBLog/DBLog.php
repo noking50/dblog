@@ -2,17 +2,31 @@
 
 namespace Noking50\DBLog;
 
+use Monolog\Logger;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Formatter\LineFormatter;
+
 /**
  * DBLog
  * 
  */
 class DBLog {
 
+    private $logger;
+
     /**
      * Construct
      * 
      */
     public function __construct() {
+        $path = config('dblog.path');
+        $day = intval(config('dblog.day'));
+
+        $handler = new RotatingFileHandler($path, $day, Logger::INFO);
+        $handler->setFormatter(tap(new LineFormatter(null, null, true, true), function ($formatter) {
+                    $formatter->includeStacktraces();
+                }));
+        $this->logger = new Logger('dblog', [$handler]);
     }
 
     public function write($table, $before, $after) {
@@ -36,7 +50,7 @@ class DBLog {
             'user' => app('user')->id(),
         ];
 
-        logger()->channel(config('dblog.logger_channel'))->info('[' . $action . ']' . json_encode($data));
+        $this->logger->info('[' . $action . ']' . json_encode($data));
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'logger_channel' => 'dblog',
+    'path' => storage_path('dblogs/db.log'),
+    'day' => 30,
 ];

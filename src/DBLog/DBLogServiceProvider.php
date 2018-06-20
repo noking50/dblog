@@ -13,6 +13,12 @@ class DBLogServiceProvider extends ServiceProvider {
      */
     protected $defer = true;
 
+    public function boot() {
+        $this->publishes([
+            __DIR__ . '/../config/dblog.php' => config_path('dblog.php'),
+        ]);
+    }
+
     /**
      * Register the service provider.
      *
