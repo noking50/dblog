@@ -22,7 +22,7 @@
                 "Noking50\\DBLog\\DBLogServiceProvider"
             ],
             "aliases": {
-                "User": "Noking50\\DBLog\\Facades\\DBLog"
+                "DBLog": "Noking50\\DBLog\\Facades\\DBLog"
             }
         }
     }
